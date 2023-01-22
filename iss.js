@@ -8,8 +8,9 @@
  */
 const request = require('request');
 
+
 const fetchMyIP = function(callback) {
-  request('https://api.ipify.org?format=json', (error, response, body) => {
+  request('https://ipapi.co/json/', (error, response, body) => {
     if (error) {
       callback(error, null);
       return;
@@ -25,7 +26,7 @@ const fetchMyIP = function(callback) {
 };
 
 const fetchCoordsByIP = function(ip, callback) {
-  request(`https://ipwho.is/${ip}`, (error, response, body) => {
+  request(`https://ipapi.co/${ip}/json/`, (error, response, body) => {
     if (error) {
       callback(error, null);
       return;
@@ -36,10 +37,6 @@ const fetchCoordsByIP = function(ip, callback) {
       return;
     }
     const data = JSON.parse(body);
-    if (!data.success) {
-      callback(Error(data.message), null);
-      return;
-    }
     const coordinates = {
       latitude: data.latitude,
       longitude: data.longitude
@@ -66,5 +63,4 @@ const fetchISSFlyOverTimes = function(coords, callback) {
 
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
-
 
